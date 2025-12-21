@@ -300,6 +300,7 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+    let isRandom = false;
     const startScreen = document.getElementById('startScreen');
     const mapScreen = document.getElementById('mapScreen');
     const startBtn = document.getElementById('startBtn');
@@ -323,15 +324,20 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function selectStation(station) {
-        const name = station.dataset.name;
+    const name = station.dataset.name;
 
-        clearActiveStations();
-        station.classList.add('active');
+    clearActiveStations();
+    station.classList.add('active');
 
-        stationNameDisplay.textContent = `${name}!`;
-        stationDescription.textContent = descriptions[name] || "Описание отсутствует";
-        stationInfo.style.display = 'block';
+    stationNameDisplay.textContent = isRandom
+        ? `${name}!`
+        : `Отличный выбор! ${name}`;
+
+    stationDescription.textContent = descriptions[name] || "Описание отсутствует";
+    stationInfo.style.display = 'block';
     }
+
+
 
     // старт
     startBtn.addEventListener('click', () => {
@@ -349,11 +355,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // клик по станции
     stations.forEach(station => {
-        station.addEventListener('click', function (e) {
-            e.stopPropagation();
-            selectStation(this);
-        });
+    station.addEventListener('click', function (e) {
+        e.stopPropagation();
+        isRandom = false;
+        selectStation(this);
     });
+});
+
 
     // клик мимо
     document.querySelector('.metro-map-container').addEventListener('click', () => {
@@ -364,9 +372,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // случайная станция
     randomBtn.addEventListener('click', function () {
-        const randomStation = stations[Math.floor(Math.random() * stations.length)];
-        selectStation(randomStation);
-    });
+    isRandom = true;
+
+    const randomStation = stations[Math.floor(Math.random() * stations.length)];
+    selectStation(randomStation);
+});
+
+
 });
 </script>
 
