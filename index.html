@@ -49,7 +49,7 @@
 
  #mapScreen {
     display: none;
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 20px auto;
     position: relative;
     padding: 20px;
@@ -127,8 +127,8 @@
 
 #stationName {
     position: absolute;
-    top: 7px;
-    left: 200px;
+    top: 10px;
+    left: 250px;
     background: linear-gradient(135deg, #ffffff, #f0f4ff); /* лёгкий градиент */
     padding: 12px 15px;
     border-radius: 12px; /* более мягкие углы */
@@ -144,8 +144,8 @@
 
     #stationInfo {
     position: absolute;
-    top: 230px;
-    left: 870px;
+    top: 150px;
+    left: 800px;
     width: 400px;
     padding: 15px;
     background: linear-gradient(135deg, #ffffff, #f0f4ff); /* лёгкий градиент */
@@ -170,6 +170,28 @@
         top: 10px; 
         right: 20px;
     }
+    .popup-trigger {
+  color: #667eea;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.popup {
+  display: none;
+  position: absolute;
+  background: white;
+  padding: 10px;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+  width: 220px;
+  z-index: 200;
+}
+
+.popup img {
+  width: 100%;
+  border-radius: 8px;
+}
+
 </style>
 </head>
 <body>
@@ -182,8 +204,7 @@
 <div id="mapScreen">
     <h1 id="mapTitle">Может на Красную площадь?</h1>
     <button id="backBtn">Назад</button>
-</div>
-    <!-- Кнопка случайной станции -->
+   <!-- Кнопка случайной станции -->
     <style>
     #mapTitle {
     font-size: 3em;
@@ -191,12 +212,9 @@
     text-align: center;
     margin-bottom: 20px;
 }
-
-
-
 #randomStationBtn {
     position: absolute;
-    top: 230px;
+    top: 150px;
     left: 130px;
     padding: 12px 30px;
     font-size: 16px;
@@ -210,6 +228,14 @@
     transition: transform 0.2s, box-shadow 0.2s, background 0.3s;
     z-index: 50;
 }
+#stationsLayer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 
 #randomStationBtn:hover {
     transform: translateY(-2px);
@@ -226,101 +252,114 @@
     <!-- Окно описания станции -->
     <div id="stationInfo">
         <p id="stationDescription"></p>
+       <div id="inlineImage" style="display:none; margin-top:10px;">
+         <img src="" style="max-width:100%; border-radius:10px;">
+    </div>
+
     </div>
 
     <div class="metro-map-container">
         <svg width="1200" height="1200" viewBox="0 0 1000 1200">
             <!-- Линии метро -->
-            <path id="redLine" d="M705 218 L705 280 L410 580 L350 580 L320 610 L275 645 L275 760 L190 850 L190 1050 L270 1130" stroke="red" stroke-width="5" fill="transparent"/>
-            <path id="greenLine" d="M190 120 L190 280 L530 620 L530 865 L670 1005 L830 1005 L830 1050" stroke="green" stroke-width="5" fill="transparent"/>
-            <path id="grayLine" d="M445 50 L445 140 L355 235 L355 330 L445 430 L445 470 L405 520 L405 610 L445 655 L445 1100" stroke="gray" stroke-width="5" fill="transparent"/>
-            <path id="orangeLine" d="M535 50 L535 325 L515 360 L515 470 L545 510 L545 574 L475 640 L405 640 L360 690 L360 1035" stroke="orange" stroke-width="5" fill="transparent"/>
-            <path id="limeLine" d="M365 50 L365 140 L445 223 L445 425 L460 440 L530 440 L645 550 L645 730 L790 885 L790 990" stroke="#c0ff00" stroke-width="5" fill="transparent"/>
-            <path id="purpleLine" d="M100 100 L100 320 L268 485 L500 485 L720 705 L850 705" stroke="purple" stroke-width="5" fill="transparent"/>
-            <path id="blueLine" d="M82 385 A 95 107 0 0 0 830 578 L605 360 M270 370 A 250 250 0 0 1 605 360 M270 370 L105 370 L82 385" stroke="#01ffff" stroke-width="5" fill="none"/>
-            <circle id="brownLine" cx="445" cy="525" r="160" stroke="brown" stroke-width="5" fill="transparent"/>
-        </svg>
-
-       <!-- Красная линия -->
-        <button class="station" data-name="Бульвар Рокоссовского" style="top:230px; left:825px; border-color:red;"></button>
-        <button class="station" data-name="Локомотив" style="top:280px; left:825px; border-color:red;"></button>
-        <button class="station" data-name="Преображенская площадь" style="top:325px; left:800px; border-color:red;"></button>
-        <button class="station" data-name="Сокольники" style="top:390px; left:735px; border-color:red;"></button>
-        <button class="station" data-name="Красносельская" style="top:415px; left:710px; border-color:red;"></button>
-        <button class="station" data-name="Комсомольская" style="top:440px; left:685px; border-color:red;"></button>
-        <button class="station" data-name="Красные ворота" style="top:455px; left:670px; border-color:red;"></button>
-        <button class="station" data-name="Чистые пруды" style="top:475px; left:650px; border-color:red;"></button>
-        <button class="station" data-name="Лубянка" style="top:520px; left:607px; border-color:red;"></button>
-        <button class="station" data-name="Охотный ряд" style="top:545px; left:583px; border-color:red;"></button>
-        <button class="station" data-name="Библиотека имени Ленина" style="top:599px; left:507px; border-color:red;"></button>
-        <button class="station" data-name="Кропоткинская" style="top:615px; left:454px; border-color:red;"></button>
-        <button class="station" data-name="Парк культуры" style="top:634px; left:435px; border-color:red;"></button>
-        <button class="station" data-name="Фрунзенская" style="top:653px; left:411px; border-color:red;"></button>
-        <button class="station" data-name="Спортивная" style="top:690px; left:395px; border-color:red;"></button>
-        <button class="station" data-name="Воробьёвы горы" style="top:730px; left:395px; border-color:red;"></button>
-        <button class="station" data-name="Университет" style="top:810px; left:365px; border-color:red;"></button>
-        <button class="station" data-name="Проспект Вернадского" style="top:840px; left:340px; border-color:red;"></button>
-        <button class="station" data-name="Юго-западная" style="top:887px; left:312px; border-color:red;"></button>
-        <button class="station" data-name="Тропарёво" style="top:912px; left:312px; border-color:red;"></button>
-        <button class="station" data-name="Румянцево" style="top:941px; left:312px; border-color:red;"></button>
-        <button class="station" data-name="Саларьево" style="top:972px; left:312px; border-color:red;"></button>
-        <button class="station" data-name="Филатов луг" style="top:1001px; left:312px; border-color:red;"></button>
-        <button class="station" data-name="Прокшино" style="top:1030px; left:312px; border-color:red;"></button>
-        <button class="station" data-name="Ольховая" style="top:1059px; left:312px; border-color:red;"></button>
-        <button class="station" data-name="Новомосковская" style="top:1100px; left:340px; border-color:red;"></button>
-        <button class="station" data-name="Потапово" style="top:1150px; left:390px; border-color:red;"></button>
-
-
+                <!-- Красная линия -->
+        <path id="redLine" d="M705 268 L705 330 L410 630 L350 630 L320 660 L275 695 L275 810 L190 900 L190 1100 L270 1180" stroke="red" stroke-width="5" fill="transparent"/>
         <!-- Зеленая линия -->
-        <button class="station" data-name="Зеленая 1" style="top:120px; left:190px; border-color:green;"></button>
-        <button class="station" data-name="Зеленая 2" style="top:280px; left:190px; border-color:green;"></button>
-        <button class="station" data-name="Зеленая 3" style="top:620px; left:530px; border-color:green;"></button>
-        <button class="station" data-name="Зеленая 4" style="top:865px; left:530px; border-color:green;"></button>
-        <button class="station" data-name="Зеленая 5" style="top:1005px; left:670px; border-color:green;"></button>
-        <button class="station" data-name="Зеленая 6" style="top:1005px; left:830px; border-color:green;"></button>
-        <button class="station" data-name="Зеленая 7" style="top:1050px; left:830px; border-color:green;"></button>
-
+        <path id="greenLine" d="M190 170 L190 330 L530 670 L530 915 L670 1055 L830 1055 L830 1100" stroke="green" stroke-width="5" fill="transparent"/>
         <!-- Серая линия -->
-        <button class="station" data-name="Алтуфьево" style="top:65px; left:565px; border-color:gray;"></button>
-        <button class="station" data-name="Бибирево" style="top:95px; left:565px; border-color:gray;"></button>
-        <button class="station" data-name="Отрадное" style="top:125px; left:565px; border-color:gray;"></button>
-        <button class="station" data-name="Владыкино" style="top:155px; left:565px; border-color:gray;"></button>
-        <button class="station" data-name="Петровско-Разумовская" style="top:200px; left:528px; border-color:gray;"></button>
-        <button class="station" data-name="Тимирязевская" style="top:235px; left:494px; border-color:gray;"></button>
-        <button class="station" data-name="Дмитровская" style="top:290px; left:475px; border-color:gray;"></button>
-        <button class="station" data-name="Савёловская" style="top:336px; left:475px; border-color:gray;"></button>
-        <button class="station" data-name="Менделеевская" style="top:380px; left:500px; border-color:gray;"></button>
+        <path id="grayLine" d="M445 100 L445 190 L355 285 L355 380 L445 480 L445 520 L405 570 L405 660 L445 705 L445 1150" stroke="gray" stroke-width="5" fill="transparent"/>
+        <!-- Оранжевая линия -->
+        <path id="orangeLine" d="M535 100 L535 375 L515 410 L515 520 L545 560 L545 624 L475 690 L405 690 L360 740 L360 1085" stroke="orange" stroke-width="5" fill="transparent"/>
+        <!-- Лаймовая линия -->
+        <path id="limeLine" d="M365 100 L365 190 L445 273 L445 475 L460 490 L530 490 L645 600 L645 780 L790 935 L790 1040" stroke="#c0ff00" stroke-width="5" fill="transparent"/>
+        <!-- Фиолетовая линия -->
+        <path id="purpleLine" d="M100 150 L100 370 L268 535 L500 535 L720 755 L850 755" stroke="purple" stroke-width="5" fill="transparent"/>
+        <!-- Голубая линия -->
+        <path id="blueLine" d="M82 435 A 95 107 0 0 0 830 628 L605 410 M270 420 A 250 250 0 0 1 605 410 M270 420 L105 420 L82 435" stroke="#01ffff" stroke-width="5" fill="none"/>
+        <!-- Коричневая линия (окружная) -->
+        <circle id="brownLine" cx="445" cy="575" r="160" stroke="brown" stroke-width="5" fill="transparent"/>
+    </svg>
+        <div id="stationsLayer">
+             <!-- Красная линия -->
+    <button class="station" data-name="Бульвар Рокоссовского" style="top:283px; left:825px; border-color:red;"></button>
+    <button class="station" data-name="Локомотив" style="top:333px; left:825px; border-color:red;"></button>
+    <button class="station" data-name="Преображенская площадь" style="top:378px; left:800px; border-color:red;"></button>
+    <button class="station" data-name="Сокольники" style="top:443px; left:735px; border-color:red;"></button>
+    <button class="station" data-name="Красносельская" style="top:468px; left:710px; border-color:red;"></button>
+    <button class="station" data-name="Комсомольская" style="top:492px; left:685px; border-color:red;"></button>
+    <button class="station" data-name="Красные ворота" style="top:508px; left:670px; border-color:red;"></button>
+    <button class="station" data-name="Чистые пруды" style="top:528px; left:650px; border-color:red;"></button>
+    <button class="station" data-name="Лубянка" style="top:573px; left:607px; border-color:red;"></button>
+    <button class="station" data-name="Охотный ряд" style="top:598px; left:583px; border-color:red;"></button>
+    <button class="station" data-name="Библиотека имени Ленина" style="top:652px; left:507px; border-color:red;"></button>
+    <button class="station" data-name="Кропоткинская" style="top:668px; left:454px; border-color:red;"></button>
+    <button class="station" data-name="Парк культуры" style="top:687px; left:435px; border-color:red;"></button>
+    <button class="station" data-name="Фрунзенская" style="top:706px; left:411px; border-color:red;"></button>
+    <button class="station" data-name="Спортивная" style="top:743px; left:395px; border-color:red;"></button>
+    <button class="station" data-name="Воробьёвы горы" style="top:783px; left:395px; border-color:red;"></button>
+    <button class="station" data-name="Университет" style="top:863px; left:365px; border-color:red;"></button>
+    <button class="station" data-name="Проспект Вернадского" style="top:893px; left:340px; border-color:red;"></button>
+    <button class="station" data-name="Юго-западная" style="top:940px; left:312px; border-color:red;"></button>
+    <button class="station" data-name="Тропарёво" style="top:965px; left:312px; border-color:red;"></button>
+    <button class="station" data-name="Румянцево" style="top:994px; left:312px; border-color:red;"></button>
+    <button class="station" data-name="Саларьево" style="top:1025px; left:312px; border-color:red;"></button>
+    <button class="station" data-name="Филатов луг" style="top:1054px; left:312px; border-color:red;"></button>
+    <button class="station" data-name="Прокшино" style="top:1083px; left:312px; border-color:red;"></button>
+    <button class="station" data-name="Ольховая" style="top:1112px; left:312px; border-color:red;"></button>
+    <button class="station" data-name="Новомосковская" style="top:1153px; left:340px; border-color:red;"></button>
+    <button class="station" data-name="Потапово" style="top:1203px; left:390px; border-color:red;"></button>
 
-        <button class="station" data-name="Цветной бульвар" style="top:463px; left:565px; border-color:gray;"></button>
-        <button class="station" data-name="Чеховская" style="top:516px; left:543px; border-color:gray;"></button>
-        <button class="station" data-name="Боровицкая" style="top:585px; left:525px; border-color:gray;"></button>
-        <button class="station" data-name="Полянка" style="top:645px; left:540px; border-color:gray;"></button>
-        <button class="station" data-name="Серпуховская" style="top:690px; left:565px; border-color:gray;"></button>
-        <button class="station" data-name="Тульская" style="top:740px; left:565px; border-color:gray;"></button>
-        <button class="station" data-name="Нагатинская" style="top:785px; left:565px; border-color:gray;"></button>
-        <button class="station" data-name="Нагорная" style="top:830px; left:565px; border-color:gray;"></button>
-        <button class="station" data-name="Нахимовский проспект" style="top:875px; left:565px; border-color:gray;"></button>
-        <button class="station" data-name="Севастопольская" style="top:945px; left:565px; border-color:gray;"></button>
-        <button class="station" data-name="Чертановская" style="top:980px; left:565px; border-color:gray;"></button>
-        <button class="station" data-name="Южная" style="top:1005px; left:565px; border-color:gray;"></button>
-        <button class="station" data-name="Пражская" style="top:1030px; left:565px; border-color:gray;"></button>
-        <button class="station" data-name="Улица Академика Янгеля" style="top:1070px; left:565px; border-color:gray;"></button>
-        <button class="station" data-name="Аннино" style="top:1095px; left:565px; border-color:gray;"></button>
-        <button class="station" data-name="Бульвар Дмитрия Донского" style="top:1120px; left:565px; border-color:gray;"></button>
+    <!-- Зеленая линия -->
+    <button class="station" data-name="Зеленая 1" style="top:175px; left:190px; border-color:green;"></button>
+    <button class="station" data-name="Зеленая 2" style="top:335px; left:190px; border-color:green;"></button>
+    <button class="station" data-name="Зеленая 3" style="top:675px; left:530px; border-color:green;"></button>
+    <button class="station" data-name="Зеленая 4" style="top:920px; left:530px; border-color:green;"></button>
+    <button class="station" data-name="Зеленая 5" style="top:1060px; left:670px; border-color:green;"></button>
+    <button class="station" data-name="Зеленая 6" style="top:1060px; left:830px; border-color:green;"></button>
+    <button class="station" data-name="Зеленая 7" style="top:1105px; left:830px; border-color:green;"></button>
 
-        <!-- Окружная линия -->
-        <button class="station" data-name="Новослободская" style="top:400px; left:500px; border-color:brown;"></button>
-        <button class="station" data-name="Белорусская" style="top:437px; left:447px; border-color:brown;"></button>
-        <button class="station" data-name="Краснопресненская" style="top:516px; left:408px; border-color:brown;"></button>
-        <button class="station" data-name="Киевская" style="top:575px; left:408px; border-color:brown;"></button>
-        <button class="station" data-name="Октябрьская" style="top:690px; left:497px; border-color:brown;"></button>
-        <button class="station" data-name="Добрынинская" style="top:704px; left:580px; border-color:brown;"></button>
-        <button class="station" data-name="Павелецкая" style="top:680px; left:650px; border-color:brown;"></button>
-        <button class="station" data-name="Таганская" style="top:600px; left:715px; border-color:brown;"></button>
+    <!-- Серая линия -->
+    <button class="station" data-name="Алтуфьево" style="top:120px; left:565px; border-color:gray;"></button>
+    <button class="station" data-name="Бибирево" style="top:150px; left:565px; border-color:gray;"></button>
+    <button class="station" data-name="Отрадное" style="top:180px; left:565px; border-color:gray;"></button>
+    <button class="station" data-name="Владыкино" style="top:210px; left:565px; border-color:gray;"></button>
+    <button class="station" data-name="Петровско-Разумовская" style="top:255px; left:525px; border-color:gray;"></button>
+    <button class="station" data-name="Тимирязевская" style="top:290px; left:491px; border-color:gray;"></button>
+    <button class="station" data-name="Дмитровская" style="top:345px; left:475px; border-color:gray;"></button>
+    <button class="station" data-name="Савёловская" style="top:391px; left:475px; border-color:gray;"></button>
+    <button class="station" data-name="Менделеевская" style="top:433px; left:500px; border-color:gray;"></button>
+    <button class="station" data-name="Цветной бульвар" style="top:518px; left:565px; border-color:gray;"></button>
+    <button class="station" data-name="Чеховская" style="top:571px; left:543px; border-color:gray;"></button>
+    <button class="station" data-name="Боровицкая" style="top:640px; left:525px; border-color:gray;"></button>
+    <button class="station" data-name="Полянка" style="top:700px; left:540px; border-color:gray;"></button>
+    <button class="station" data-name="Серпуховская" style="top:745px; left:565px; border-color:gray;"></button>
+    <button class="station" data-name="Тульская" style="top:795px; left:565px; border-color:gray;"></button>
+    <button class="station" data-name="Нагатинская" style="top:840px; left:565px; border-color:gray;"></button>
+    <button class="station" data-name="Нагорная" style="top:885px; left:565px; border-color:gray;"></button>
+    <button class="station" data-name="Нахимовский проспект" style="top:930px; left:565px; border-color:gray;"></button>
+    <button class="station" data-name="Севастопольская" style="top:1000px; left:565px; border-color:gray;"></button>
+    <button class="station" data-name="Чертановская" style="top:1035px; left:565px; border-color:gray;"></button>
+    <button class="station" data-name="Южная" style="top:1060px; left:565px; border-color:gray;"></button>
+    <button class="station" data-name="Пражская" style="top:1085px; left:565px; border-color:gray;"></button>
+    <button class="station" data-name="Улица Академика Янгеля" style="top:1125px; left:565px; border-color:gray;"></button>
+    <button class="station" data-name="Аннино" style="top:1150px; left:565px; border-color:gray;"></button>
+    <button class="station" data-name="Бульвар Дмитрия Донского" style="top:1175px; left:565px; border-color:gray;"></button>
+
+    <!-- Окружная линия -->
+    <button class="station" data-name="Новослободская" style="top:453px; left:500px; border-color:brown;"></button>
+    <button class="station" data-name="Белорусская" style="top:490px; left:447px; border-color:brown;"></button>
+    <button class="station" data-name="Краснопресненская" style="top:570px; left:408px; border-color:brown;"></button>
+    <button class="station" data-name="Киевская" style="top:630px; left:408px; border-color:brown;"></button>
+    <button class="station" data-name="Октябрьская" style="top:745px; left:495px; border-color:brown;"></button>
+    <button class="station" data-name="Добрынинская" style="top:759px; left:578px; border-color:brown;"></button>
+    <button class="station" data-name="Павелецкая" style="top:735px; left:648px; border-color:brown;"></button>
+    <button class="station" data-name="Таганская" style="top:653px; left:715px; border-color:brown;"></button>
+    <button class="station" data-name="Курская" style="top:563px; left:722px; border-color:brown;"></button>
+    <button class="station" data-name="Проспект Мира" style="top:453px; left:635px; border-color:brown;"></button>
+
 
         <p id="stationName"></p>
+     
     </div>
-</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
@@ -338,9 +377,46 @@ document.addEventListener('DOMContentLoaded', function () {
     const randomBtn = document.getElementById('randomStationBtn');
 
     const descriptions = {
-        "Алтуфьево": "Топ-1 причина сюда ехать: рядом есть Бибирево. А ещё Прятки в темноте, Лига VR. Относительно недалеко есть Алтуфьевский парк, аэротруба и картинг-центр Trikeland Moscow. Бонус: найдёте зеленого слона и бегемотов ",
-        "Воробьёвы горы": "Тут даже не будет чего-то необычного, приезжайте сюда в сотый раз погулять по набережной, посмотреть с моста на Москву-реку. Сколько раз я мечтала там утопиться в холодный осенний день...Прекрасное место. + можно покататься на канатной дороге или зиплайне над Москвой)",
-        "Красная 3": "Описание Красной 3"
+        "Алтуфьево": `
+      <p>
+        Топ-1 причина сюда ехать: рядом есть Бибирево. А ещё
+        <a href="#"
+           class="image-link"
+           data-img="IMG_0320.jpg"
+           data-url="https://yandex.ru/maps/org/pryatki_v_temnote/83678130274?si=g45hpuwhcu4v8w3y6g1fr5frn4">
+           Прятки в темноте
+        </a>.
+        Лига VR.
+      </p>
+
+      <p>
+        Относительно недалеко есть
+        <a href="#"
+           class="image-link"
+           data-img="orig.jpg"
+           data-url="https://yandex.ru/maps/-/CLDsyRKP">
+           Алтуфьевский парк
+        </a>,
+        <a href="#"
+           class="image-link"
+           data-img="polet-v-aerotrube-aeropotok.jpg"
+           data-url="https://yandex.ru/maps/-/CLDsy0lH">
+           аэротруба
+        </a>
+        и
+        <a href="#"
+           class="image-link"
+           data-img="preview_pic2.70.jpg"
+           data-url="https://yandex.ru/maps/-/CLDsy2z2">
+           картинг-центр Trikeland Moscow
+        </a>.
+      </p>
+
+      <p>
+        Бонус: найдёте зелёного слона и бегемотов.
+      </p>
+    `
+
     };
 
     function clearActiveStations() {
@@ -348,20 +424,22 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function selectStation(station) {
-    const name = station.dataset.name;
+        const name = station.dataset.name;
 
-    clearActiveStations();
-    station.classList.add('active');
+        clearActiveStations();
+        station.classList.add('active');
 
-    stationNameDisplay.textContent = isRandom
-        ? `${name}!`
-        : `Отличный выбор! ${name}`;
+        stationNameDisplay.textContent = isRandom
+            ? `${name}!`
+            : `Отличный выбор! ${name}`;
 
-    stationDescription.textContent = descriptions[name] || "Описание отсутствует";
-    stationInfo.style.display = 'block';
+        stationDescription.innerHTML = descriptions[name] || "Описание отсутствует";
+        stationInfo.style.display = 'block';
+        // скрываем картинку при новом выборе станции
+        const imageBox = document.getElementById('inlineImage');
+        imageBox.style.display = 'none';
+        imageBox.querySelector('img').src = '';
     }
-
-
 
     // старт
     startBtn.addEventListener('click', () => {
@@ -379,13 +457,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // клик по станции
     stations.forEach(station => {
-    station.addEventListener('click', function (e) {
-        e.stopPropagation();
-        isRandom = false;
-        selectStation(this);
+        station.addEventListener('click', function (e) {
+            e.stopPropagation();
+            isRandom = false;
+            selectStation(this);
+        });
     });
-});
-
 
     // клик мимо
     document.querySelector('.metro-map-container').addEventListener('click', () => {
@@ -396,15 +473,46 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // случайная станция
     randomBtn.addEventListener('click', function () {
-    isRandom = true;
+        isRandom = true;
+        const randomStation = stations[Math.floor(Math.random() * stations.length)];
+        selectStation(randomStation);
+    });
 
-    const randomStation = stations[Math.floor(Math.random() * stations.length)];
-    selectStation(randomStation);
+    // открытие картинок
+    document.addEventListener('click', function (e) {
+    if (e.target.classList.contains('image-link')) {
+        e.preventDefault();
+
+        const imgSrc = e.target.dataset.img;
+        const url = e.target.dataset.url;
+
+        const imageBox = document.getElementById('inlineImage');
+        const img = imageBox.querySelector('img');
+
+        img.src = imgSrc;
+
+        // добавляем / обновляем ссылку
+        let link = imageBox.querySelector('.popup-link');
+        if (!link) {
+            link = document.createElement('a');
+            link.className = 'popup-link';
+            link.target = '_blank';
+            link.style.display = 'block';
+            link.style.marginTop = '8px';
+            link.style.color = '#667eea';
+            imageBox.appendChild(link);
+        }
+
+        link.href = url;
+        link.textContent = 'Открыть на карте';
+
+        imageBox.style.display = 'block';
+    }
 });
-
 
 });
 </script>
+
 
 </body>
 </html>
