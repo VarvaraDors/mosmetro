@@ -141,23 +141,34 @@
     transition: transform 0.2s, box-shadow 0.2s;
     z-index: 100;
 }
-
-    #stationInfo {
+#stationInfo {
     position: absolute;
     top: 150px;
     left: 800px;
     width: 400px;
     padding: 15px;
-    background: linear-gradient(135deg, #ffffff, #f0f4ff); /* лёгкий градиент */
-    border-radius: 12px; /* более мягкие углы */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15); /* выразительная тень */
-    font-family: 'Arial', sans-serif;
-    font-size: 14px;
+    background: linear-gradient(135deg, #ffffff, #f0f4ff);
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    font-family: Arial, sans-serif;
+    font-size: 16px;
     color: #667eea;
     line-height: 1.5;
-    display: none; /* скрыто по умолчанию */
+    display: none;
     z-index: 100;
 }
+
+#stationInfo::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border: 2px solid #667eea;
+    border-radius: 12px;
+    pointer-events: none;
+}
+
+
+
 
 #stationInfo.show {
     display: block;
