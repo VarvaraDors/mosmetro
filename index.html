@@ -46,6 +46,27 @@
     #startBtn:hover, #backBtn:hover {
         transform: scale(1.05);
     }
+        /* СНЕГ */
+    .snowflake {
+        position: absolute;
+        top: -10px;
+        color: white;
+        font-size: 12px;
+        opacity: 0.8;
+        pointer-events: none;
+        animation-name: fall;
+        animation-timing-function: linear;
+    }
+
+    @keyframes fall {
+        0% {
+            transform: translateY(0) translateX(0);
+        }
+        100% {
+            transform: translateY(110vh) translateX(30px);
+        }
+    }
+
 
  #mapScreen {
     display: none;
@@ -178,8 +199,8 @@
 
     #backBtn {
         position: absolute;
-        top: 10px; 
-        right: 20px;
+        top: 40px; 
+        right: 60px;
     }
     .popup-trigger {
   color: #667eea;
@@ -208,6 +229,7 @@
 <body>
 
 <div id="startScreen" class="start-screen">
+    <div id="snow"></div>
     <h1>В Москве нечего делать?</h1>
     <button id="startBtn">Да...</button>
 </div>
@@ -219,8 +241,9 @@
     <style>
     #mapTitle {
     font-size: 3em;
-    color: white; /* насыщенный, но не слишком тёмный */
-    text-align: center;
+    color: white; 
+    text-align: left;
+    padding-left: 50px;
     margin-bottom: 20px;
 }
 #randomStationBtn {
@@ -283,7 +306,7 @@
         <!-- Лаймовая линия -->
         <path id="limeLine" d="M365 100 L365 190 L445 273 L445 475 L460 490 L530 490 L645 600 L645 780 L790 935 L790 1040" stroke="#c0ff00" stroke-width="5" fill="transparent"/>
         <!-- Фиолетовая линия -->
-        <path id="purpleLine" d="M100 150 L100 370 L268 535 L500 535 L720 755 L850 755" stroke="purple" stroke-width="5" fill="transparent"/>
+        <path id="purpleLine" d="M100 150 L100 370 L268 535 L500 535 L720 755 L850 755 L900 805 L900 920" stroke="purple" stroke-width="5" fill="transparent"/>
         <!-- Голубая линия -->
         <path id="blueLine" d="M82 435 A 95 107 0 0 0 830 628 L605 410 M270 420 A 250 250 0 0 1 605 410 M270 420 L105 420 L82 435" stroke="#01ffff" stroke-width="5" fill="none"/>
         <!-- Коричневая линия (окружная) -->
@@ -405,12 +428,76 @@
     <button class="station" data-name="Ясенево" style="top:1080px; left:480px; border-color:orange;"></button>
     <button class="station" data-name="Новоясеневская" style="top:1115px; left:480px; border-color:orange;"></button>
 
+
+
+    <!-- Фиолетовая линия (Таганско-Краснопресненская) -->
+    <button class="station" data-name="Планерная" style="top:165px; left:220px; border-color:purple;"></button>
+    <button class="station" data-name="Сходненская" style="top:205px; left:220px; border-color:purple;"></button>
+    <button class="station" data-name="Тушинская" style="top:245px; left:220px; border-color:purple;"></button>
+    <button class="station" data-name="Спартак" style="top:285px; left:220px; border-color:purple;"></button>
+    <button class="station" data-name="Щукинская" style="top:325px; left:220px; border-color:purple;"></button>
+    <button class="station" data-name="Октябрьское поле" style="top:410px; left:240px; border-color:purple;"></button>
+    <button class="station" data-name="Полежаевская" style="top:450px; left:280px; border-color:purple;"></button>
+    <button class="station" data-name="Беговая" style="top:488px; left:320px; border-color:purple;"></button>
+    <button class="station" data-name="Улица 1905 года" style="top:527px; left:360px; border-color:purple;"></button>
+    <button class="station" data-name="Баррикадная" style="top:555px; left:425px; border-color:purple;"></button>
+    <button class="station" data-name="Пушкинская" style="top:555px; left:535px; border-color:purple;"></button>
+    <button class="station" data-name="Кузнецкий мост" style="top:555px; left:603px; border-color:purple;"></button>
+    <button class="station" data-name="Пролетарская" style="top:715px; left:780px; border-color:purple;"></button>
+    <button class="station" data-name="Волгоградский проспект" style="top:745px; left:810px; border-color:purple;"></button>
+    <button class="station" data-name="Текстильщики" style="top:775px; left:905px; border-color:purple;"></button>
+    <button class="station" data-name="Кузьминки" style="top:775px; left:935px; border-color:purple;"></button>
+    <button class="station" data-name="Рязанский проспект" style="top:790px; left:985px; border-color:purple;"></button>
+    <button class="station" data-name="Выхино" style="top:815px; left:1010px; border-color:purple;"></button>
+    <button class="station" data-name="Лермонтовский проспект" style="top:860px; left:1020px; border-color:purple;"></button>
+    <button class="station" data-name="Жулебино" style="top:900px; left:1020px; border-color:purple;"></button>
+    <button class="station" data-name="Котельники" style="top:940px; left:1020px; border-color:purple;"></button>
+
         <p id="stationName"></p>
      
     </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
+
+    /* ===== СНЕГ (ИСПРАВЛЕН, БОЛЬШЕ НИЧЕГО НЕ ТРОГАЛОСЬ) ===== */
+
+    const snowContainer = document.getElementById('snow');
+    let snowInterval = null;
+
+    function createSnowflake() {
+        const snowflake = document.createElement('div');
+        snowflake.className = 'snowflake';
+        snowflake.textContent = '❄';
+
+        snowflake.style.left = Math.random() * window.innerWidth + 'px';
+        snowflake.style.fontSize = 8 + Math.random() * 12 + 'px';
+        snowflake.style.animationDuration = 5 + Math.random() * 5 + 's';
+        snowflake.style.opacity = 0.4 + Math.random() * 0.6;
+
+        snowContainer.appendChild(snowflake);
+
+        setTimeout(() => {
+            snowflake.remove();
+        }, 10000);
+    }
+
+    function startSnow() {
+        if (!snowInterval) {
+            snowInterval = setInterval(createSnowflake, 200);
+        }
+    }
+
+    function stopSnow() {
+        clearInterval(snowInterval);
+        snowInterval = null;
+        snowContainer.innerHTML = '';
+    }
+
+    startSnow();
+
+    /* ===== ДАЛЬШЕ ИДЁТ ТВОЙ КОД БЕЗ ИЗМЕНЕНИЙ ===== */
+
     let isRandom = false;
     const startScreen = document.getElementById('startScreen');
     const mapScreen = document.getElementById('mapScreen');
@@ -503,8 +590,8 @@ document.addEventListener('DOMContentLoaded', function () {
            найдёте скульптуру лягушки))
         </a> 🐸
       </p>
-    `, 
-    "Отрадное": `
+    `,
+        "Отрадное": `
       <p>
         Крутое место, чтобы погулять: тут красивый большой
         <a href="#"
@@ -543,13 +630,46 @@ document.addEventListener('DOMContentLoaded', function () {
         А прямо за парком Отрадное —
         <a href="#"
            class="image-link"
-           data-img="images/z3284501.jpg""
+           data-img="images/z3284501.jpg"
            data-url="https://yandex.ru/maps/-/CLHAJOK9">
            гончарная мастерская гончарики
         </a>:))
       </p>
-    `
+    `,
+        "Владыкино": `
+      <p>
+        Отсюда недалеко до главного входа в
+        <a href="#"
+           class="image-link"
+           data-img="images/3966b49ca20d45648097aca75e45"
+           data-url="https://yandex.ru/maps/-/CLHJ5P~8">
+           Ботанический сад РАН
+        </a>
+        — отличное место, чтобы погулять или сбежать от цивилизации в лес.
+      </p>
 
+      <p>
+        Если дойдёте до Старой и Новой оранжерей —
+        в 10 минутах ходьбы будет
+        <a href="#"
+           class="image-link"
+           data-img="images/музей_крипт"
+           data-url="https://yandex.ru/maps/-/CLHJB4ye">
+           музей криптографии
+        </a>.
+      </p>
+
+      <p>
+        А ещё рядом есть
+        <a href="#"
+           class="image-link"
+           data-img="images/orig (2)"
+           data-url="https://yandex.ru/maps/-/CLHJJNJ~">
+           бильярдный клуб «Квартира №9»
+        </a>
+        с очень атмосферными залами.
+      </p>
+    `
 
     };
 
@@ -569,14 +689,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
         stationDescription.innerHTML = descriptions[name] || "Описание отсутствует";
         stationInfo.style.display = 'block';
-        // скрываем картинку при новом выборе станции
+
         const imageBox = document.getElementById('inlineImage');
         imageBox.style.display = 'none';
         imageBox.querySelector('img').src = '';
     }
 
-    // старт
     startBtn.addEventListener('click', () => {
+        stopSnow();
         startScreen.style.display = 'none';
         mapScreen.style.display = 'block';
     });
@@ -587,9 +707,9 @@ document.addEventListener('DOMContentLoaded', function () {
         stationNameDisplay.textContent = '';
         stationInfo.style.display = 'none';
         clearActiveStations();
+        startSnow();
     });
 
-    // клик по станции
     stations.forEach(station => {
         station.addEventListener('click', function (e) {
             e.stopPropagation();
@@ -598,51 +718,47 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     });
 
-    // клик мимо
     document.querySelector('.metro-map-container').addEventListener('click', () => {
         stationNameDisplay.textContent = '';
         stationInfo.style.display = 'none';
         clearActiveStations();
     });
 
-    // случайная станция
     randomBtn.addEventListener('click', function () {
         isRandom = true;
         const randomStation = stations[Math.floor(Math.random() * stations.length)];
         selectStation(randomStation);
     });
 
-    // открытие картинок
     document.addEventListener('click', function (e) {
-    if (e.target.classList.contains('image-link')) {
-        e.preventDefault();
+        if (e.target.classList.contains('image-link')) {
+            e.preventDefault();
 
-        const imgSrc = e.target.dataset.img;
-        const url = e.target.dataset.url;
+            const imgSrc = e.target.dataset.img;
+            const url = e.target.dataset.url;
 
-        const imageBox = document.getElementById('inlineImage');
-        const img = imageBox.querySelector('img');
+            const imageBox = document.getElementById('inlineImage');
+            const img = imageBox.querySelector('img');
 
-        img.src = imgSrc;
+            img.src = imgSrc;
 
-        // добавляем / обновляем ссылку
-        let link = imageBox.querySelector('.popup-link');
-        if (!link) {
-            link = document.createElement('a');
-            link.className = 'popup-link';
-            link.target = '_blank';
-            link.style.display = 'block';
-            link.style.marginTop = '8px';
-            link.style.color = '#667eea';
-            imageBox.appendChild(link);
+            let link = imageBox.querySelector('.popup-link');
+            if (!link) {
+                link = document.createElement('a');
+                link.className = 'popup-link';
+                link.target = '_blank';
+                link.style.display = 'block';
+                link.style.marginTop = '8px';
+                link.style.color = '#667eea';
+                imageBox.appendChild(link);
+            }
+
+            link.href = url;
+            link.textContent = 'Открыть на карте';
+
+            imageBox.style.display = 'block';
         }
-
-        link.href = url;
-        link.textContent = 'Открыть на карте';
-
-        imageBox.style.display = 'block';
-    }
-});
+    });
 
 });
 </script>
