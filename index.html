@@ -104,6 +104,32 @@
     transition: transform 0.2s, box-shadow 0.2s;
     z-index: 10;
 }
+#christmasTrees {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 120px;
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    pointer-events: none; /* чтобы не мешали кнопкам */
+    z-index: 50;
+}
+
+.christmas-tree {
+    font-size: 30px;
+    color: #0a5e0a; /* зелёный цвет ёлки */
+    transform-origin: bottom center;
+    animation: sway 2s infinite alternate ease-in-out;
+}
+
+/* лёгкое покачивание ёлочек */
+@keyframes sway {
+    0% { transform: rotate(-5deg); }
+    100% { transform: rotate(5deg); }
+}
+
 
 .station:hover {
     transform: translate(-50%, -50%) scale(1.3);
@@ -231,6 +257,7 @@
 <div id="startScreen" class="start-screen">
     <div id="snow"></div>
     <h1>В Москве нечего делать?</h1>
+    <div id="christmasTrees"></div>
     <button id="startBtn">Да...</button>
 </div>
 
@@ -471,7 +498,7 @@ document.addEventListener('DOMContentLoaded', function () {
         snowflake.textContent = '❄';
 
         snowflake.style.left = Math.random() * window.innerWidth + 'px';
-        snowflake.style.fontSize = 8 + Math.random() * 12 + 'px';
+        snowflake.style.fontSize = 30 + Math.random() * 12 + 'px';
         snowflake.style.animationDuration = 5 + Math.random() * 5 + 's';
         snowflake.style.opacity = 0.4 + Math.random() * 0.6;
 
@@ -641,7 +668,7 @@ document.addEventListener('DOMContentLoaded', function () {
         Отсюда недалеко до главного входа в
         <a href="#"
            class="image-link"
-           data-img="images/3966b49ca20d45648097aca75e45.jpg"
+           data-img="images/3966b49ca20d45648097aca75e45"
            data-url="https://yandex.ru/maps/-/CLHJ5P~8">
            Ботанический сад РАН
         </a>
@@ -653,7 +680,7 @@ document.addEventListener('DOMContentLoaded', function () {
         в 10 минутах ходьбы будет
         <a href="#"
            class="image-link"
-           data-img="images/музей_крипт.jpg"
+           data-img="images/музей_крипт"
            data-url="https://yandex.ru/maps/-/CLHJB4ye">
            музей криптографии
         </a>.
@@ -663,7 +690,7 @@ document.addEventListener('DOMContentLoaded', function () {
         А ещё рядом есть
         <a href="#"
            class="image-link"
-           data-img="images/orig (2).jpg"
+           data-img="images/orig (2)"
            data-url="https://yandex.ru/maps/-/CLHJJNJ~">
            бильярдный клуб «Квартира №9»
         </a>
@@ -802,6 +829,34 @@ document.addEventListener('DOMContentLoaded', function () {
             imageBox.style.display = 'block';
         }
     });
+            function createChristmasTrees() {
+    const treesContainer = document.getElementById('christmasTrees');
+    treesContainer.style.position = 'absolute';
+    treesContainer.style.bottom = '0';
+    treesContainer.style.left = '80px'; // немного отступа слева
+    treesContainer.style.width = '0'; // не важно, т.к. абсолютное позиционирование
+
+    const trees = [
+        {size: 150, left: 0},  // большая
+        {size: 80, left: 100}   // маленькая справа от большой
+    ];
+
+    trees.forEach(treeData => {
+        const tree = document.createElement('div');
+        tree.className = 'christmas-tree';
+        tree.textContent = '🎄';
+        tree.style.fontSize = treeData.size + 'px';
+        tree.style.position = 'absolute';
+        tree.style.bottom = '0px';
+        tree.style.left = treeData.left + 'px';
+        tree.style.animationDuration = 5 + Math.random() * 5 + 's';
+        treesContainer.appendChild(tree);
+    });
+
+    }
+
+    createChristmasTrees();
+
 
 });
 </script>
@@ -809,5 +864,4 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
-
 
