@@ -70,10 +70,10 @@
 
  #mapScreen {
     display: none;
-    max-width: 1300px;
+    width: 120%;
     margin: 20px auto;
-    position: relative;
-    padding: 20px;
+    position: absolute;
+    padding: 10px;
     background: #667eea;
     border-radius: 15px; /* плавные углы */
     box-shadow: 0 12px 30px rgba(0,0,0,0.1); /* лёгкая выразительная тень */
@@ -81,7 +81,7 @@
 
 .metro-map-container {
     position: relative;
-    width: 1200px;
+    width: 95%;
     height: 1200px;
     margin: 0 auto;
     background: linear-gradient(135deg, #ffffff, #f0f4ff); /* согласуем с окнами станции */
@@ -174,8 +174,8 @@
 
 #stationName {
     position: absolute;
-    top: 10px;
-    left: 250px;
+    top: 1.3%;
+    left: 270px;
     background: linear-gradient(135deg, #ffffff, #f0f4ff); /* лёгкий градиент */
     padding: 12px 15px;
     border-radius: 12px; /* более мягкие углы */
@@ -191,7 +191,7 @@
 #stationInfo {
     position: absolute;
     top: 150px;
-    left: 800px;
+    left: 57%;
     width: 400px;
     padding: 15px;
     background: linear-gradient(135deg, #ffffff, #f0f4ff);
@@ -275,7 +275,7 @@
 }
 #randomStationBtn {
     position: absolute;
-    top: 150px;
+    top: 11%;
     left: 130px;
     padding: 12px 30px;
     font-size: 16px;
@@ -935,75 +935,75 @@ document.addEventListener('DOMContentLoaded', function () {
         и съесть пиццу в форме сердца.
       </p>
     `,
-        "Менделеевская": `
-          <p>
-      Начнём с того, что с Менделеевской есть переход на Новослободскую — сама станция очень
-      <a href="#" 
-         class="image-link" 
-         data-img="images/новослободская.jpg"
-         data-url="https://yandex.ru/maps/-/CLHPNGO6">
-         красивая
-      </a>.
-      Рядом находится несколько интересных музеев:
-      <a href="#" 
-         class="image-link" 
-         data-img="images/музей_музыки.jpg"
-         data-url="https://yandex.ru/maps/-/CLHPND58">
-         Российский национальный музей музыки
-      </a>,
-      <a href="#" 
-         class="image-link" 
-         data-img="images/музей_декор_иск.jpg"
-         data-url="https://yandex.ru/maps/-/CLHPRMLn">
-         Музей декоративно-прикладного искусства
-      </a>,
-      <a href="#" 
-         class="image-link" 
-         data-img="images/музей_гулага.jpg"
-         data-url="https://yandex.ru/maps/?text=Музей%20истории%20ГУЛАГа%20Москва">
-         Музей истории ГУЛАГа
-      </a> (Временно не работает!), а также
-      <a href="#" 
-         class="image-link" 
-         data-img="images/музей_театра_обр.jpg"
-         data-url="https://yandex.ru/maps/-/CLHPVK5X">
-         музей кукольного театра Образцова
-      </a>
-    </p>
-    
-    
-          <p>
-            <p>
-      В пешей доступности —
-      <a href="#" 
-         class="image-link" 
-         data-img="images/зайкафе.jpg"
-         data-url="https://yandex.ru/maps/-/CLHPVXzh">
-         Зайкафе
-      </a>
-      — антикафе с кроликами, где можно выпить кофе, поиграть в настольные игры и погладить кроликов.
-    </p>
-    
-    <p>
-      Недалеко отсюда находится пространство
-      <a href="#" 
-         class="image-link" 
-         data-img="images/ломай.jpg"
-         data-url="https://yandex.ru/maps/-/CLHPZ018">
-         «Ломай меня полностью»
-      </a>
-      — место, где можно легально крушить вещи.
-    </p>
-    
-    <p>
-      Для прогулок здесь подойдёт
-      <a href="#" 
-         class="image-link" 
-         data-img="images/дел_парк.jpg"
-         data-url="https://yandex.ru/maps/-/CLHP6Y23">
-         Делегатский парк
-      </a>.
-    </p>
+    "Менделеевская": `
+      <p>
+  Начнём с того, что с Менделеевской есть переход на Новослободскую — сама станция очень
+  <a href="#" 
+     class="image-link" 
+     data-img="images/новослободская.jpg"
+     data-url="https://yandex.ru/maps/-/CLHPNGO6">
+     красивая
+  </a>.
+  Рядом находится несколько интересных музеев:
+  <a href="#" 
+     class="image-link" 
+     data-img="images/музей_музыки.jpg"
+     data-url="https://yandex.ru/maps/-/CLHPND58">
+     Российский национальный музей музыки
+  </a>,
+  <a href="#" 
+     class="image-link" 
+     data-img="images/музей_декор_иск.jpg"
+     data-url="https://yandex.ru/maps/-/CLHPRMLn">
+     Музей декоративно-прикладного искусства
+  </a>,
+  <a href="#" 
+     class="image-link" 
+     data-img="images/музей_гулага.jpg"
+     data-url="https://yandex.ru/maps/?text=Музей%20истории%20ГУЛАГа%20Москва">
+     Музей истории ГУЛАГа
+  </a> (Временно не работает!), а также
+  <a href="#" 
+     class="image-link" 
+     data-img="images/музей_театра_обр.jpg"
+     data-url="https://yandex.ru/maps/-/CLHPVK5X">
+     музей кукольного театра Образцова
+  </a>
+</p>
+
+
+      <p>
+        <p>
+  В пешей доступности —
+  <a href="#" 
+     class="image-link" 
+     data-img="images/зайкафе.jpg"
+     data-url="https://yandex.ru/maps/-/CLHPVXzh">
+     Зайкафе
+  </a>
+  — антикафе с кроликами, где можно выпить кофе, поиграть в настольные игры и погладить кроликов.
+</p>
+
+<p>
+  Недалеко отсюда находится пространство
+  <a href="#" 
+     class="image-link" 
+     data-img="images/ломай.jpg"
+     data-url="https://yandex.ru/maps/-/CLHPZ018">
+     «Ломай меня полностью»
+  </a>
+  — место, где можно легально крушить вещи.
+</p>
+
+<p>
+  Для прогулок здесь подойдёт
+  <a href="#" 
+     class="image-link" 
+     data-img="images/дел_парк.jpg"
+     data-url="https://yandex.ru/maps/-/CLHP6Y23">
+     Делегатский парк
+  </a>.
+</p>
     `,
         "Цветной бульвар": `
       <p>
@@ -1039,9 +1039,9 @@ document.addEventListener('DOMContentLoaded', function () {
            data-url="https://yandex.ru/maps/-/CCU5q8u6">
            М’АРС
         </a>  с иммерсивными выставками.
-      </p>
+      </p>,
     `,
-        "Бульвар Рокоссовского": `
+    "Бульвар Рокоссовского": `
       <p>
       Для жески культурных искусствоведов рядом есть 
       <a href="#" 
@@ -1195,8 +1195,5 @@ document.addEventListener('DOMContentLoaded', function () {
 
 </body>
 </html>
-
-
-
 
 
